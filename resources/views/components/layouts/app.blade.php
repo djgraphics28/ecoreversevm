@@ -60,9 +60,21 @@
                                     <i class="fas fa-plus"></i> Quick Add
                                 </button>
                                 <div class="dropdown-menu">
+                                    @can('create students')
+                                        <a class="dropdown-item" href="{{ route('students.create') }}"><i
+                                                class="fas fa-plus"></i> Create Student</a>
+                                    @endcan
+                                    @can('create grade level')
+                                        <a class="dropdown-item" href="{{ route('grade-levels.create') }}"><i
+                                                class="fas fa-plus"></i> Create Grade Level</a>
+                                    @endcan
+                                    @can('create section')
+                                        <a class="dropdown-item" href="{{ route('sections.create') }}"><i
+                                                class="fas fa-plus"></i> Create Section</a>
+                                    @endcan
                                     @can('create users')
                                         <a class="dropdown-item" href="{{ route('users.create') }}"><i
-                                                class="fas fa-plus"></i> Create Users</a>
+                                                class="fas fa-plus"></i> Create User</a>
                                     @endcan
                                     @can('create roles')
                                         <a class="dropdown-item" href="{{ route('roles.create') }}"><i
