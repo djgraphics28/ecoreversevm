@@ -24,8 +24,9 @@ use App\Livewire\Students\Create as StudentsCreate;
 use App\Livewire\Students\Edit as StudentsEdit;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -67,4 +68,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -5,7 +5,7 @@
         {{-- <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div> --}}
-        <x-application-logo width="75px" class="w-24 h-24 fill-current text-gray-500" />
+        <x-application-logo width="50px" class="w-24 h-24 fill-current text-gray-500" />
         <div class="sidebar-brand-text mx-3">Eco&nbsp;Reverse VM</div>
     </a>
 
