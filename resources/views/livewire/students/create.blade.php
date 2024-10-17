@@ -24,6 +24,16 @@
                             @enderror
                         </div>
 
+                        <!-- Student Number -->
+                        <div class="form-group">
+                            <label for="email" class="form-label">Student Email Address</label>
+                            <input type="text" id="email" wire:model="email" class="form-control"
+                                required>
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <!-- RFID Code -->
                         <div class="form-group">
                             <label for="rfid_code" class="form-label">RFID Code</label>
