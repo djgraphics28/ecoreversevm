@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\API\StudentProfileResource;
 
 class StudentAuthController extends Controller
@@ -14,18 +15,26 @@ class StudentAuthController extends Controller
 
     public function login(Request $request)
     {
+        // Validate the input
         $request->validate([
-            'email' => 'required|string|email',
+            'email' => 'required|string',  // We will use 'email' field for both email and student_number
             'password' => 'required|string',
         ]);
 
-        // Attempt to authenticate the student
-        if (!Auth::guard('student')->attempt($request->only('email', 'password'))) {
+        // Retrieve the student by either email or student_number
+        $user = \App\Models\Student::where('email', $request->email)
+            ->orWhere('student_number', $request->email)  // Check if the email provided matches the student_number
+            ->first();
+
+        // If no user is found, return an error
+        if (!$user) {
             return $this->error(null, 'The provided credentials are incorrect.', 401);
         }
 
-        // Get the authenticated student
-        $user = Auth::guard('student')->user();
+        // Check if the provided password is correct
+        if (!Hash::check($request->password, $user->password)) {
+            return $this->error(null, 'The provided credentials are incorrect.', 401);
+        }
 
         // Create a token for the authenticated user
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -33,7 +42,7 @@ class StudentAuthController extends Controller
         return $this->success([
             'token' => $token,
             'token_type' => 'Bearer',
-            'user' => New StudentProfileResource($user)
+            'user' => new StudentProfileResource($user)
         ], 'Login successful');
     }
 }
