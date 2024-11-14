@@ -14,7 +14,7 @@ class Create extends Component
 {
     use WithFileUploads;
 
-    public $email;
+    // public $email;
     public $student_number;
     public $rfid_code;
     public $first_name;
@@ -41,7 +41,7 @@ class Create extends Component
     public function createStudent()
     {
         $this->validate([
-            'email' => 'required|email',
+            // 'email' => 'required|email',
             'student_number' => 'required|string|max:255',
             'rfid_code' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
@@ -76,9 +76,9 @@ class Create extends Component
             'grade_level_id' => $this->grade_level_id,
             'section_id' => $this->section_id,
             'points' => $this->points,
-            'email' => $this->email,
+            // 'email' => $this->email,
             'password' => strtolower($this->last_name),
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ]);
 
