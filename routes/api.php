@@ -19,3 +19,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'student'], function()
     Route::put('/{id}/update-password', [StudentProfileController::class, 'updatePassword'])->name('api.student.update.password');
     Route::post('/{id}/upload-profile-picture', [StudentProfileController::class, 'uploadProfilePicture'])->name('api.student.update.profile_picture');
 });
+
+//api health check
+Route::get('/health-check', function () {
+    return response()->json(['message' => 'API is working']);
+})->name('api.health-check');

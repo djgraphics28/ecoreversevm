@@ -22,8 +22,7 @@ class StudentAuthController extends Controller
         ]);
 
         // Retrieve the student by either email or student_number
-        $user = \App\Models\Student::where('email', $request->email)
-            ->orWhere('student_number', $request->email)  // Check if the email provided matches the student_number
+        $user = \App\Models\Student::where('student_number', $request->email)  // Check if the email provided matches the student_number
             ->first();
 
         // If no user is found, return an error
