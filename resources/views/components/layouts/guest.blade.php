@@ -20,7 +20,7 @@
                 <a href="/">
                     <x-application-logo class="w-24 h-24 fill-current text-gray-500" />
                 </a>
-                <label class="mt-4 text-4xl text-bold text-green-900">Eco Verse VM Admin</label>
+                <label class="mt-4 text-4xl text-bold text-green-900">Eco Reverse VM Admin</label>
             </div>
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
