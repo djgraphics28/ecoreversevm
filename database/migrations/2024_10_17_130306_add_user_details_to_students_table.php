@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->string('email')->unique();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
         });
@@ -25,8 +25,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->dropColumn('email');
-            $table->dropColumn('email_verified_at');
+            // $table->dropColumn('email');
+            // $table->dropColumn('email_verified_at');
             $table->dropColumn('password'); // Corrected to drop 'password'
             $table->dropColumn('remember_token'); // Corrected to drop 'remember_token'
         });
