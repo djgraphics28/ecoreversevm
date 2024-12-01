@@ -10,7 +10,7 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    {{-- <hr class="sidebar-divider my-0"> --}}
 
     @can('access dashboard')
         <!-- Nav Item - Dashboard -->
@@ -22,12 +22,12 @@
     @endcan
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    {{-- <hr class="sidebar-divider"> --}}
 
-    <!-- Heading -->
+    {{-- <!-- Heading -->
     <div class="sidebar-heading">
         Navigation
-    </div>
+    </div> --}}
 
     @can('access users')
         <!-- Nav Item - Users Collapse Menu -->
@@ -47,6 +47,25 @@
                         <a class="collapse-item {{ request()->is('users/create') ? 'active' : '' }}"
                             href="{{ route('users.create') }}">Create New User</a>
                     @endcan
+                </div>
+            </div>
+        </li>
+    @endcan
+
+    @can('access faculties')
+        <!-- Nav Item - faculties Collapse Menu -->
+        <li class="nav-item {{ request()->is('faculties*') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFaculties"
+                aria-expanded="{{ request()->is('faculties*') ? 'true' : 'false' }}" aria-controls="collapseFaculties">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Faculties</span>
+            </a>
+            <div id="collapseFaculties" class="collapse {{ request()->is('faculties*') ? 'show' : '' }}"
+                aria-labelledby="headingFaculties" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Faculty Components:</h6>
+                    <a class="collapse-item {{ request()->is('users') ? 'active' : '' }}"
+                        href="{{ route('faculties.index') }}">List of Faculties</a>
                 </div>
             </div>
         </li>
@@ -80,19 +99,30 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    {{-- <div class="sidebar-heading">
         Student Info Management
-    </div>
+    </div> --}}
+
+    @can('access student lists')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('student.lists') }}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Student Lists</span>
+            </a>
+        </li>
+    @endcan
 
     @can('access students')
         <!-- Nav Item - FAQs Menu -->
-        <li class="nav-item {{ request()->is('students*') || request()->is('grade-levels*') || request()->is('sections*') ? 'active' : '' }}">
+        <li
+            class="nav-item {{ request()->is('students*') || request()->is('grade-levels*') || request()->is('sections*') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudents"
                 aria-expanded="true" aria-controls="collapseStudents">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Manage Students</span>
             </a>
-            <div id="collapseStudents" class="collapse {{ request()->is('students*')  ||  request()->is('grade-levels*') || request()->is('sections*') ? 'show' : '' }}"
+            <div id="collapseStudents"
+                class="collapse {{ request()->is('students*') || request()->is('grade-levels*') || request()->is('sections*') ? 'show' : '' }}"
                 aria-labelledby="headingStudents" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Student Component:</h6>
@@ -115,15 +145,15 @@
             </div>
         </li>
     @endcan
-
-    {{-- @can('access app settings')
-        <!-- Nav Item - App settings -->
+    <!-- Nav Item - App settings -->
+    @can('access mission-vision')
         <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-cogs"></i>
-                <span>App Settings</span></a>
+            <a class="nav-link" href="{{ route('mission-vision.index') }}">
+                <i class="fas fa-fw fa-bullseye"></i>
+                <span>Mission/Vision</span>
+            </a>
         </li>
-    @endcan --}}
+    @endcan
 
 
 

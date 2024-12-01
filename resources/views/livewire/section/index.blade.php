@@ -28,6 +28,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>{{ __('Section') }}</th>
+                                    <th>{{ __('Faculty') }}</th>
                                     <th>{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
@@ -36,6 +37,7 @@
                                     <tr>
                                         <td>{{ $section->id }}</td>
                                         <td>{{ $section->name }}</td>
+                                        <td>{{ $section->faculty->full_name ?? '' }}</td>
                                         <td>
                                             @can('edit section')
                                                 <a href="{{ route('sections.edit', $section->id) }}"

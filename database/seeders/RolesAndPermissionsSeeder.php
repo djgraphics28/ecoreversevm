@@ -48,6 +48,11 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'access profile']);
         Permission::create(['name' => 'edit profile']);
 
+        Permission::create(['name' => 'access mission-vision']);
+
+        Permission::create(['name' => 'access faculties']);
+        Permission::create(['name' => 'access student lists']);
+
         // Create roles and assign existing permissions
         $superAdminRole = Role::create(['name' => 'admin']);
         $superAdminRole->givePermissionTo(Permission::all());

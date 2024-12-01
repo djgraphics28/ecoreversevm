@@ -23,6 +23,20 @@
                             @enderror
                         </div>
 
+                        <!-- Faculty Selection -->
+                        <div class="form-group">
+                            <label for="faculty" class="form-label">Faculty</label>
+                            <select id="faculty" wire:model="faculty" class="form-control">
+                                <option value="">Select Faculty</option>
+                                @foreach($faculties as $faculty)
+                                    <option value="{{ $faculty->id }}">{{ $faculty->title }} {{ $faculty->first_name }} {{ $faculty->last_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('faculty')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <!-- Submit Button -->
                         <div class="form-group text-right">
                             <button type="submit" class="btn btn-primary">

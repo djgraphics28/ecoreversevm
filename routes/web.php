@@ -1,38 +1,42 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 
-use App\Livewire\Users\Index as UserIndex;
-use App\Livewire\Users\Create as UserCreate;
 use App\Livewire\Users\Edit as UserEdit;
-
-use App\Livewire\Roles\Index as RolesIndex;
-use App\Livewire\Roles\Create as RolesCreate;
 use App\Livewire\Roles\Edit as RolesEdit;
+use App\Livewire\Users\Index as UserIndex;
 
-use App\Livewire\GradeLevel\Index as GradeLevelIndex;
-use App\Livewire\GradeLevel\Create as GradeLevelCreate;
-use App\Livewire\GradeLevel\Edit as GradeLevelEdit;
+use App\Livewire\Faculty\Index as FacultyIndex;
 
-use App\Livewire\Section\Index as SectionIndex;
-use App\Livewire\Section\Create as SectionCreate;
+use App\Livewire\Faculty\Student\Index as StudentList;
+
+use App\Http\Controllers\ProfileController;
+use App\Livewire\Roles\Index as RolesIndex;
+use App\Livewire\Users\Create as UserCreate;
+
+use App\Livewire\Roles\Create as RolesCreate;
 use App\Livewire\Section\Edit as SectionEdit;
+use App\Livewire\Section\Index as SectionIndex;
 
-use App\Livewire\Students\Index as StudentsIndex;
-use App\Livewire\Students\Create as StudentsCreate;
 use App\Livewire\Students\Edit as StudentsEdit;
+use App\Livewire\Section\Create as SectionCreate;
+use App\Livewire\Students\Index as StudentsIndex;
+
+use App\Livewire\GradeLevel\Edit as GradeLevelEdit;
+use App\Livewire\Students\Create as StudentsCreate;
+use App\Livewire\GradeLevel\Index as GradeLevelIndex;
+
+use App\Livewire\MissionVision\Index as MissionVision;
+use App\Livewire\GradeLevel\Create as GradeLevelCreate;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -41,6 +45,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/users', UserIndex::class)->name('users.index');
         Route::get('/users/create', UserCreate::class)->name('users.create');
         Route::get('/users/{user}/edit', UserEdit::class)->name('users.edit');
+    });
+
+    Route::middleware('permission:access faculties')->group(function () {
+        Route::get('/faculties', FacultyIndex::class)->name('faculties.index');
+    });
+
+    Route::middleware('permission:access student list')->group(function () {
+        Route::get('/student-lists', StudentList::class)->name('student.lists');
     });
 
     Route::middleware('permission:access roles')->group(function () {
@@ -66,6 +78,9 @@ Route::middleware('auth')->group(function () {
         Route::get('students/create', StudentsCreate::class)->name('students.create');
         Route::get('students/{studentId}/edit', StudentsEdit::class)->name('students.edit');
     });
+
+    Route::get('mission-vision', MissionVision::class)->name('mission-vision.index')->middleware('permission:access mission-vision');
+    Route::get('student-lists', StudentList::class)->name('student.lists')->middleware('permission:access student lists');
 });
 
 require __DIR__ . '/auth.php';

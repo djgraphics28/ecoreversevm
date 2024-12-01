@@ -10,6 +10,8 @@ class Edit extends Component
     public $section;
     public $sectionId;
     public $name;
+    public $faculty;
+    public $faculties;
 
     // Mount method to populate the form with existing section data
     public function mount($sectionId)
@@ -17,6 +19,8 @@ class Edit extends Component
         $section = Section::find($sectionId);
         $this->section = $section;
         $this->name = $section->name;
+        $this->faculty = $section->faculty_id;
+        $this->faculties = \App\Models\Faculty::all();
     }
 
     // Method to update an existing section
@@ -31,6 +35,7 @@ class Edit extends Component
         // Update the section
         $this->section->update([
             'name' => $this->name,
+            'faculty_id' => $this->faculty,
         ]);
 
         // Flash message for success

@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Create extends Component
 {
     public $name;
+    public $faculty;
+    public $faculties;
+
+    public function mount()
+    {
+        $this->faculties = \App\Models\Faculty::all();
+    }
 
     // Method to create a new section
     public function createSection()
@@ -22,6 +29,7 @@ class Create extends Component
         // Create the section
         $section = Section::create([
             'name' => $this->name,
+            'faculty_id' => $this->faculty,
         ]);
 
         // Flash message for success

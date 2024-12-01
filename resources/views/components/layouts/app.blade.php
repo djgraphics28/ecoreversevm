@@ -23,6 +23,12 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
 
 
     @livewireStyles
@@ -53,38 +59,40 @@
 
                     <!-- Topbar with Dropdown Button without Caret Icon -->
                     <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-plus"></i> Quick Add
-                                </button>
-                                <div class="dropdown-menu">
-                                    @can('create students')
-                                        <a class="dropdown-item" href="{{ route('students.create') }}"><i
-                                                class="fas fa-plus"></i> Create Student</a>
-                                    @endcan
-                                    @can('create grade level')
-                                        <a class="dropdown-item" href="{{ route('grade-levels.create') }}"><i
-                                                class="fas fa-plus"></i> Create Grade Level</a>
-                                    @endcan
-                                    @can('create section')
-                                        <a class="dropdown-item" href="{{ route('sections.create') }}"><i
-                                                class="fas fa-plus"></i> Create Section</a>
-                                    @endcan
-                                    @can('create users')
-                                        <a class="dropdown-item" href="{{ route('users.create') }}"><i
-                                                class="fas fa-plus"></i> Create User</a>
-                                    @endcan
-                                    @can('create roles')
-                                        <a class="dropdown-item" href="{{ route('roles.create') }}"><i
-                                                class="fas fa-plus"></i> Create
+                        @if (Auth::user()->is_admin)
+                            <div class="input-group">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-plus"></i> Quick Add
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @can('create students')
+                                            <a class="dropdown-item" href="{{ route('students.create') }}"><i
+                                                    class="fas fa-plus"></i> Create Student</a>
+                                        @endcan
+                                        @can('create grade level')
+                                            <a class="dropdown-item" href="{{ route('grade-levels.create') }}"><i
+                                                    class="fas fa-plus"></i> Create Grade Level</a>
+                                        @endcan
+                                        @can('create section')
+                                            <a class="dropdown-item" href="{{ route('sections.create') }}"><i
+                                                    class="fas fa-plus"></i> Create Section</a>
+                                        @endcan
+                                        @can('create users')
+                                            <a class="dropdown-item" href="{{ route('users.create') }}"><i
+                                                    class="fas fa-plus"></i> Create User</a>
+                                        @endcan
+                                        @can('create roles')
+                                            <a class="dropdown-item" href="{{ route('roles.create') }}"><i
+                                                    class="fas fa-plus"></i> Create
 
-                                            Roles</a>
-                                    @endcan
+                                                Roles</a>
+                                        @endcan
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                     {{-- <!-- Topbar Search -->
                     <form

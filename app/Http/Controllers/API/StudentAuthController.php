@@ -44,4 +44,17 @@ class StudentAuthController extends Controller
             'user' => new StudentProfileResource($user)
         ], 'Login successful');
     }
+
+    //Logout
+
+    public function logout(Request $request)
+    {
+        // Revoke all tokens for the authenticated user
+        $request->user()->tokens()->delete();
+
+        return $this->success([
+            'message' => 'Logged out successfully'
+        ], 201);
+    }
+
 }
