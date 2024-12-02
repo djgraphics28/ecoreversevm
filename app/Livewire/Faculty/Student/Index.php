@@ -2,9 +2,12 @@
 
 namespace App\Livewire\Faculty\Student;
 
+use App\Models\Faculty;
+use App\Models\Section;
 use App\Models\Student;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
@@ -15,11 +18,12 @@ class Index extends Component
     // Method to render the student index view
     public function render()
     {
-        $students = Student::query()
-            ->where('first_name', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('last_name', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('student_number', 'like', '%' . $this->searchTerm . '%')
-            ->orderBy('id', 'desc')
+        $facultyId = Faculty::where('user_id',Auth::user()->id)->first()->id;
+
+        $sectionId = Section::where('faculty_id', $facultyId)->first()->id;
+        // dd($sectionId);
+
+        $students = Student::where('section_id', $sectionId)
             ->paginate(10); // Adjust pagination as needed
 
         return view('livewire.faculty.student.index', [
