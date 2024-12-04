@@ -20,6 +20,6 @@ class StudentInfoResource extends JsonResource
             $this->grade->name.' - '.$this->section->name,
             $this->student_number,
             $this->points !== 0 ? $this->points : 0
-        ]
+        ];
     }
 }
