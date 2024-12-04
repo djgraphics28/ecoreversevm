@@ -90,4 +90,21 @@ class StudentProfileController extends Controller
             ]
         ]);
     }
+
+    public function getStudentInfoByRfid($rfid)
+    {
+        $student = Student::where('rfid', $rfid)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Student not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => new StudentProfileResource($student)
+        ]);
+    }
 }
