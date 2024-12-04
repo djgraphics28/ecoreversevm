@@ -93,7 +93,7 @@ class StudentProfileController extends Controller
 
     public function getStudentInfoByRfid($rfid)
     {
-        $student = Student::where('rfid', $rfid)->first();
+        $student = Student::where('rfid_code', $rfid)->first();
 
         if (!$student) {
             return response()->json([
