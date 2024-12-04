@@ -6,6 +6,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\StudentProfileResource;
+use App\Http\Resources\StudentInfoResource;
 
 class StudentProfileController extends Controller
 {
@@ -104,7 +105,7 @@ class StudentProfileController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => new StudentProfileResource($student)
+            'data' => new StudentInfoResource($student)
         ]);
     }
 }
