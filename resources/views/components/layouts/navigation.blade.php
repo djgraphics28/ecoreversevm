@@ -102,15 +102,16 @@
     {{-- <div class="sidebar-heading">
         Student Info Management
     </div> --}}
-
-    @can('access student lists')
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('student.lists') }}">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Student Lists</span>
-            </a>
-        </li>
-    @endcan
+    @if (!Auth::user()->is_admin)
+        @can('access student lists')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('student.lists') }}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Student Lists</span>
+                </a>
+            </li>
+        @endcan
+    @endif
 
     @can('access students')
         <!-- Nav Item - FAQs Menu -->
