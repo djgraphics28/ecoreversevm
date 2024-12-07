@@ -60,6 +60,18 @@ class Index extends Component
         ]);
     }
 
+    public function increment($studentId)
+    {
+        $student = Student::find($studentId);
+        $student->increment('points'); // Increment points by 1
+    }
+
+    public function decrement($studentId)
+    {
+        $student = Student::find($studentId);
+        $student->decrement('points'); // Decrement points by 1
+    }
+
     public function deleteStudent()
     {
         $student = Student::findOrFail($this->approveConfirmed);

@@ -27,6 +27,7 @@ class StudentProfileResource extends JsonResource
             "section" => $this->section->name,
             "points" => $this->points,
             "email" => $this->email,
+            'profile_pic' => $this->getFirstMediaUrl('student_pictures') ?? ''
         ];
     }
 }

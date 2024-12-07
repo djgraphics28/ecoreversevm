@@ -10,21 +10,21 @@ use App\Http\Resources\StudentInfoResource;
 
 class StudentProfileController extends Controller
 {
-    public function getProfile(Request $request, $id)
+    public function getProfile(Request $request)
     {
         // Get the authenticated user using the ParentPal model
-        $user = Student::find($id);
+        $user = $request->user();
 
         return response()->json([
             'status' => 'success',
-            'data' => New StudentProfileResource($user) // Returns all user data
+            'data' => new StudentProfileResource($user) // Returns all user data
         ]);
     }
 
-    public function updateProfile(Request $request, $id)
+    public function updateProfile(Request $request)
     {
         // Get the authenticated user using the ParentPal model
-        $user = Student::find($id);
+        $user = $request->user();
 
         // Update the user's profile with the request data
         $user->update($request->all());
@@ -37,10 +37,10 @@ class StudentProfileController extends Controller
     }
 
     //updatePassword
-    public function updatePassword(Request $request, $id)
+    public function updatePassword(Request $request)
     {
         // Get the authenticated user using the ParentPal model
-        $user = Student::find($id);
+        $user = $request->user();
 
 
         // Check if the current password matches
@@ -62,10 +62,10 @@ class StudentProfileController extends Controller
         ]);
     }
 
-    public function uploadProfilePicture(Request $request, $id)
+    public function uploadProfilePicture(Request $request)
     {
         // Get the authenticated user or find by ID
-        $user = Student::find($id);
+        $user = $request->user();
 
         // Validate the incoming request
         $request->validate([
@@ -107,5 +107,21 @@ class StudentProfileController extends Controller
             'status' => 'success',
             'data' => new StudentInfoResource($student)
         ]);
+    }
+
+    public function getPoints(Request $request)
+    {
+        try {
+            $user = Student::find($request->user()->id);
+            return response()->json([
+                'status' => 'success',
+                'points' => $user->points
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error retrieving points: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

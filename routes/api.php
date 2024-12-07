@@ -16,11 +16,12 @@ Route::get('/student-info/{rfid}',[StudentProfileController::class, 'getStudentI
 Route::post('/student/login', [StudentAuthController::class, 'login'])->name('api.student.login');
 
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'student'], function() {
-    Route::get('/{id}/profile', [StudentProfileController::class, 'getProfile'])->name('api.student.get-profile');
-    Route::get('/{id}/profile', [StudentProfileController::class, 'getProfile'])->name('api.student.profile');
-    Route::put('/{id}/profile', [StudentProfileController::class, 'updateProfile'])->name('api.student.update.profile');
-    Route::put('/{id}/update-password', [StudentProfileController::class, 'updatePassword'])->name('api.student.update.password');
-    Route::post('/{id}/upload-profile-picture', [StudentProfileController::class, 'uploadProfilePicture'])->name('api.student.update.profile_picture');
+    Route::get('/profile', [StudentProfileController::class, 'getProfile'])->name('api.student.get-profile');
+    Route::get('/profile', [StudentProfileController::class, 'getProfile'])->name('api.student.profile');
+    Route::put('/profile', [StudentProfileController::class, 'updateProfile'])->name('api.student.update.profile');
+    Route::put('/update-password', [StudentProfileController::class, 'updatePassword'])->name('api.student.update.password');
+    Route::post('/upload-profile-picture', [StudentProfileController::class, 'uploadProfilePicture'])->name('api.student.update.profile_picture');
+    Route::get('/points', [StudentProfileController::class, 'getPoints']);
 });
 
 Route::post('/admin/login', [AdminController::class, 'login'])->name('api.admin.login');

@@ -58,7 +58,20 @@
                                         <td>{{ $student->gender }}</td>
                                         <td>{{ $student->gradeLevel->name ?? 'N/A' }}</td>
                                         <td>{{ $student->section->name ?? 'N/A' }}</td>
-                                        <td>{{ $student->points }}</td>
+                                        <td class="text-center">
+                                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                                <button wire:click="increment({{ $student->id }})"
+                                                    class="btn btn-sm btn-success mr-2">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                                <input type="number" class="form-control form-control-sm text-center mr-2"
+                                                    style="width: 80px" value="{{ $student->points }}" readonly>
+                                                <button wire:click="decrement({{ $student->id }})"
+                                                    class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                         <td>
                                             @can('edit students')
                                                 <a href="{{ route('students.edit', $student->id) }}"
@@ -72,6 +85,7 @@
                                                     <i class="fas fa-trash-alt"></i> Delete
                                                 </button>
                                             @endcan
+
                                         </td>
                                     </tr>
                                 @empty
