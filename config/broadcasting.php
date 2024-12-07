@@ -1,0 +1,22 @@
+<?php
+
+return [
+
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
+
+    'connections' => [
+
+        'pusher' => [
+            'driver' => 'pusher',
+            'key' => env('PUSHER_APP_KEY'),
+            'secret' => env('PUSHER_APP_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'use_tls' => true,
+        ],
+
+        // Other broadcast drivers (like Redis, etc.) can be configured here
+
+    ],
+
+];

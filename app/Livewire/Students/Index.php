@@ -4,13 +4,17 @@ namespace App\Livewire\Students;
 
 use Livewire\Component;
 use App\Models\Student;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination;
+    use WithPagination, LivewireAlert;
 
     public $searchTerm = '';
+    public $approveConfirmed;
+
+    protected $listeners = ['deleteStudent'];
 
     // Method to render the student index view
     public function render()
@@ -27,26 +31,41 @@ class Index extends Component
         ]);
     }
 
-    // Method to confirm deletion
+    // Method to delete the student
+    // public function deleteStudent($studentId)
+    // {
+    //     $student = Student::find($studentId);
+
+    //     if ($student) {
+    //         $student->delete();
+    //         toastr()->success('Student has been deleted successfully!');
+    //     } else {
+    //         toastr()->error('An error occurred. Please try again.');
+    //     }
+    // }
+
     public function alertConfirm($studentId)
     {
-        // Logic to handle confirmation and deletion
-        $this->dispatchBrowserEvent('swal:confirm', [
-            'id' => $studentId,
-            'message' => 'Are you sure you want to delete this student?',
+        $this->approveConfirmed = $studentId;
+
+        $this->alert('warning', 'Are you sure you want to delete this student?', [
+            'position' => 'center',
+            'timer' => 3000,
+            'toast' => false,
+            'showConfirmButton' => true,
+            'onConfirmed' => 'deleteStudent',
+            'showCancelButton' => true,
+            'confirmButtonText' => 'Yes, Delete it!',
+            'cancelButtonText' => 'Cancel',
         ]);
     }
 
-    // Method to delete the student
-    public function deleteStudent($studentId)
+    public function deleteStudent()
     {
-        $student = Student::find($studentId);
+        $student = Student::findOrFail($this->approveConfirmed);
+        $student->delete();
 
-        if ($student) {
-            $student->delete();
-            toastr()->success('Student has been deleted successfully!');
-        } else {
-            toastr()->error('An error occurred. Please try again.');
-        }
+        // Add a success message (using LivewireAlert or session flash)
+        $this->alert('success', 'Student has been deleted successfully.');
     }
 }

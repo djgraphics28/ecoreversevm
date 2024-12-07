@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\StudentAuthController;
 use App\Http\Controllers\API\StudentProfileController as StudentProfileController;
 use Illuminate\Http\Request;
@@ -20,6 +21,23 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'student'], function()
     Route::put('/{id}/profile', [StudentProfileController::class, 'updateProfile'])->name('api.student.update.profile');
     Route::put('/{id}/update-password', [StudentProfileController::class, 'updatePassword'])->name('api.student.update.password');
     Route::post('/{id}/upload-profile-picture', [StudentProfileController::class, 'uploadProfilePicture'])->name('api.student.update.profile_picture');
+});
+
+Route::post('/admin/login', [AdminController::class, 'login'])->name('api.admin.login');
+
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin'], function() {
+
+    Route::post('/logout', [AdminController::class, 'logout'])->name('api.admin.logout');
+    Route::get('/profile', [AdminController::class, 'getProfile'])->name('api.admin.get-profile');
+    Route::put('/profile', [AdminController::class, 'updateProfile'])->name('api.admin.update.profile');
+    Route::get('/students',[AdminController::class, 'getStudentList'])->name('api.admin.student-list');
+    Route::get('/student/{id}', [AdminController::class, 'getStudentById'])->name('api.admin.student');
+    Route::delete('/student/{id}', [AdminController::class, 'deleteStudent'])->name('api.admin.delete.student');
+    Route::get('/sections', [AdminController::class, 'getSectionList'])->name('api.admin.sections');
+    Route::get('/faculties',[AdminController::class, 'getFaculties'])->name('api.admin.faculties');
+    Route::get('/faculty/{id}', [AdminController::class, 'getFacultyById'])->name('api.admin.faculty');
+    Route::get('/notifications', [AdminController::class, 'getNotifications'])->name('api.admin.notifications');
+    Route::get('/missions', [AdminController::class, 'getMissionVision'])->name('api.admin.missions');
 });
 
 //api health check
