@@ -25,7 +25,7 @@ class StudentProfileResource extends JsonResource
             "gender" => $this->gender,
             "grade_level" => $this->gradeLevel->name,
             "section" => $this->section->name,
-            "points" => $this->points,
+            "points" => (int)$this->points,
             "email" => $this->email,
             'profile_pic' => $this->getFirstMediaUrl('student_pictures') ?? ''
         ];

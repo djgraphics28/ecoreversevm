@@ -172,4 +172,24 @@ class AdminController extends Controller
 
         return $this->success($missionVision, 'Mission vision retrieved successfully');
     }
+
+    public function insertPoints(Request $request, $rfidCode)
+    {
+        $student = Student::where('rfid_code', $rfidCode)->first();
+        if (!$student) {
+            return $this->error(null, 'Student not found', 404);
+        }
+        $student->points += $request->points;
+        $student->save();
+        return $this->success(null, 'Points inserted successfully');
+    }
+
+    public function checkPoints($rfidCode)
+    {
+        $student = Student::where('rfid_code', $rfidCode)->first();
+        if (!$student) {
+            return $this->error(null, 'Student not found', 404);
+        }
+        return $this->success($student->points, 'Points retrieved successfully');
+    }
 }
