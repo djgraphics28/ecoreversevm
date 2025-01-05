@@ -16,10 +16,11 @@ class StudentInfoResource extends JsonResource
     {
         return [
             $this->rfid_code,
-            $this->first_name.' '.$this->lalast_name,
+            $this->first_name.' '.$this->last_name,
             $this->gradeLevel->name.' - '.$this->section->name,
             $this->student_number,
-            $this->points !== 0 ? $this->points : 0
+            $this->points !== 0 ? $this->points : 0,
+            $this->object_type
         ];
     }
 }

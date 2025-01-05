@@ -110,6 +110,17 @@
                             @enderror
                         </div>
 
+                         <!-- Object Type -->
+                         <div class="form-group">
+                            <label for="object_type" class="form-label">Object Type</label>
+                            <select id="object_type" wire:model="object_type" class="form-control">
+                                <option value="">Select Object</option>
+                                <option value="trash">Trash</option>
+                                <option value="plastic">Plastic</option>
+                                <option value="metal">Metal</option>
+                            </select>
+                        </div>
+
                         <!-- Student Picture -->
                         <div class="mb-3">
                             <label for="student_picture" class="form-label">Student Picture</label>

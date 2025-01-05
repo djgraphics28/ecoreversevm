@@ -23,6 +23,7 @@ class Edit extends Component
     public $gender;
     public $grade_level_id;
     public $section_id;
+    public $object_type;
     public $points = 0;
     public $student_picture;
     public $student; // To hold the student instance
@@ -46,6 +47,7 @@ class Edit extends Component
         $this->grade_level_id = $student->grade_level_id;
         $this->section_id = $student->section_id;
         $this->points = $student->points;
+        $this->object_type = $student->object_type;
 
         $this->gradeLevels = GradeLevel::all(); // Fetch all grade levels
         $this->sections = Section::all(); // Fetch all sections
@@ -89,6 +91,7 @@ class Edit extends Component
             'grade_level_id' => $this->grade_level_id,
             'section_id' => $this->section_id,
             'points' => $this->points,
+            'object_type' => $this->object_type ?? 'trash',
         ]);
 
         // If there's a picture, update it using Media Library
