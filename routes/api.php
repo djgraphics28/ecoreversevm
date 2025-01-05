@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/student-info/{rfid}',[StudentProfileController::class, 'getStudentInfoByRfid']);
+Route::put('/redeem/{rfid}',[StudentProfileController::class, 'redeem']);
 
 //STUDENT ROUTES
 Route::post('/student/login', [StudentAuthController::class, 'login'])->name('api.student.login');

@@ -124,4 +124,44 @@ class StudentProfileController extends Controller
             ], 500);
         }
     }
+
+    public function redeem(Request $request, $rfidCode)
+    {
+        $student = Student::where('rfid_code', $rfidCode)->first();
+        if (!$student) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Student not found'
+            ], 404);
+        }
+
+        // Validate points to deduct
+        if (!$request->has('deduct') || !is_numeric($request->deduct) || $request->deduct <= 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid points amount'
+            ], 400);
+        }
+
+        // Check if student has enough points
+        if ($student->points < $request->deduct) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Insufficient points'
+            ], 400);
+        }
+
+        $deductedPoints = $student->points - $request->deduct;
+        $student->update(['points' => $deductedPoints]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Points deducted successfully',
+            'data' => [
+                'previous_points' => $student->points + $request->deduct,
+                'deducted_points' => $request->deduct,
+                'current_points' => $deductedPoints
+            ]
+        ]);
+    }
 }
