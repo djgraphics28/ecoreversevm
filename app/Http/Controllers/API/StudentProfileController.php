@@ -206,13 +206,21 @@ class StudentProfileController extends Controller
 
                 try {
                     // Send notification email with object and points details
-                    \Mail::to('darwin.ibay30@gmail.com')->send(new InsertObjectNotification([
-                        'student_name' => $student->first_name,
-                        'object' => $object,
-                        'points' => $points,
-                        'total_points' => $student->points,
-                        'histories' => $histories
-                    ]));
+                    $emailReceivers = \App\Models\EmailReceiver::all();
+                    if ($emailReceivers->count() > 0) {
+                        $mainReceiver = $emailReceivers->first();
+                        $ccReceivers = $emailReceivers->slice(1)->pluck('email')->toArray();
+
+                        \Mail::to($mainReceiver->email)
+                            ->cc($ccReceivers)
+                            ->send(new InsertObjectNotification([
+                                'student_name' => $student->first_name,
+                                'object' => $object,
+                                'points' => $points,
+                                'total_points' => $student->points,
+                                'histories' => $histories
+                            ]));
+                    }
                 } catch (\Exception $e) {
                     \Log::error('Failed to send insert object notification email: ' . $e->getMessage());
                 }

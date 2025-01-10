@@ -71,6 +71,26 @@
         </li>
     @endcan
 
+    @can('access faculties')
+        <!-- Nav Item - faculties Collapse Menu -->
+        <li class="nav-item {{ request()->is('email-receivers*') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmailReceivers"
+                aria-expanded="{{ request()->is('email-receivers*') ? 'true' : 'false' }}"
+                aria-controls="collapseEmailReceivers">
+                <i class="fas fa-fw fa-envelope"></i>
+                <span>Email Receivers</span>
+            </a>
+            <div id="collapseEmailReceivers" class="collapse {{ request()->is('email-receivers*') ? 'show' : '' }}"
+                aria-labelledby="headingFaculties" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Receiver Components:</h6>
+                    <a class="collapse-item {{ request()->is('email-receivers') ? 'active' : '' }}"
+                        href="{{ route('email-receivers') }}">List of Receivers</a>
+                </div>
+            </div>
+        </li>
+    @endcan
+
     @can('access roles')
         <!-- Nav Item - FAQs Menu -->
         <li class="nav-item {{ request()->is('roles*') ? 'active' : '' }}">

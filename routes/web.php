@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Dashboard;
+use App\Livewire\EmailReceiver;
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\Users\Edit as UserEdit;
@@ -79,6 +80,7 @@ Route::middleware('auth')->group(function () {
         Route::get('students/{studentId}/edit', StudentsEdit::class)->name('students.edit');
     });
 
+    Route::get('/email-receivers', EmailReceiver::class)->name('email-receivers');
     Route::get('mission-vision', MissionVision::class)->name('mission-vision.index')->middleware('permission:access mission-vision');
     Route::get('student-lists', StudentList::class)->name('student.lists')->middleware('permission:access student lists');
 });
