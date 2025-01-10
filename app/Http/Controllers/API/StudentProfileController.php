@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\InsertObjectHistory;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Models\InsertObjectHistory;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\StudentProfileResource;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InsertObjectNotification;
 use App\Http\Resources\StudentInfoResource;
+use App\Http\Resources\API\StudentProfileResource;
 
 class StudentProfileController extends Controller
 {
@@ -178,9 +180,9 @@ class StudentProfileController extends Controller
                 ], 404);
             }
             $object = $request->input('object');
-            if($object == "plastic") {
+            if ($object == "plastic") {
                 $points = 5;
-            } elseif($object == "metal") {
+            } elseif ($object == "metal") {
                 $points = 10;
             } else {
                 $points = 0;
@@ -189,17 +191,35 @@ class StudentProfileController extends Controller
             $student->points += $points;
             $student->save();
 
-            if($object != "trash") {
+            if ($object !== "trash") {
+                // Create history record for the inserted object
                 InsertObjectHistory::create([
                     'student_id' => $student->id,
                     'object_inserted' => $object,
                     'points' => $points
                 ]);
-            }
 
+                // Get student's history of inserted objects
+                $histories = InsertObjectHistory::where('student_id', $student->id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+                try {
+                    // Send notification email with object and points details
+                    Mail::to('darwin.ibay30@gmail.com')->send(new InsertObjectNotification([
+                        'student_name' => $student->name,
+                        'object' => $object,
+                        'points' => $points,
+                        'total_points' => $student->points,
+                        'histories' => $histories
+                    ]));
+                } catch (\Exception $e) {
+                    \Log::error('Failed to send insert object notification email: ' . $e->getMessage());
+                }
+            }
             return response()->json([
                 'status' => 'success',
-                'message' => $object == "trash" ? 'No Points added':'Points added successfully',
+                'message' => $object == "trash" ? 'No Points added' : 'Points added successfully',
                 'points' => $student->points
             ]);
         } catch (\Exception $e) {
