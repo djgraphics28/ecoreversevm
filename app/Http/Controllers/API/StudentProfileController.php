@@ -206,7 +206,7 @@ class StudentProfileController extends Controller
 
                 try {
                     // Send notification email with object and points details
-                    Mail::to('darwin.ibay30@gmail.com')->send(new InsertObjectNotification([
+                    \Mail::to('darwin.ibay30@gmail.com')->send(new InsertObjectNotification([
                         'student_name' => $student->name,
                         'object' => $object,
                         'points' => $points,
