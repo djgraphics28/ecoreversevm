@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'student'], function()
     Route::put('/update-password', [StudentProfileController::class, 'updatePassword'])->name('api.student.update.password');
     Route::post('/upload-profile-picture', [StudentProfileController::class, 'uploadProfilePicture'])->name('api.student.update.profile_picture');
     Route::get('/points', [StudentProfileController::class, 'getPoints']);
+
 });
 
 Route::post('/admin/login', [AdminController::class, 'login'])->name('api.admin.login');
@@ -41,6 +42,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin'], function() {
     Route::get('/notifications', [AdminController::class, 'getNotifications'])->name('api.admin.notifications');
     Route::get('/missions', [AdminController::class, 'getMissionVision'])->name('api.admin.missions');
 });
+
+Route::post('/student/insert-object/{rfidCode}', [StudentProfileController::class, 'insertObjectAndCreatePoints']);
 
 //api health check
 Route::get('/health-check', function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\InsertObjectHistory;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -163,5 +164,49 @@ class StudentProfileController extends Controller
                 'current_points' => $deductedPoints
             ]
         ]);
+    }
+
+    public function insertObjectAndCreatePoints(Request $request, $rfidCode)
+    {
+        try {
+            $student = Student::where('rfid_code', $rfidCode)->first();
+            $points = 0;
+            if (!$student) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Student not found'
+                ], 404);
+            }
+            $object = $request->input('object');
+            if($object == "plastic") {
+                $points = 5;
+            } elseif($object == "metal") {
+                $points = 10;
+            } else {
+                $points = 0;
+            }
+
+            $student->points += $points;
+            $student->save();
+
+            if($object != "trash") {
+                InsertObjectHistory::create([
+                    'student_id' => $student->id,
+                    'object_inserted' => $object,
+                    'points' => $points
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $object == "trash" ? 'No Points added':'Points added successfully',
+                'points' => $student->points
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error adding points: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
